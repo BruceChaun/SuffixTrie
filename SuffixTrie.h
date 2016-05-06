@@ -11,8 +11,8 @@ using namespace std;
 class SuffixTrie
 {
     private:
-        SuffixNode *root;
-        SuffixNode *longest;
+        SuffixNode *root;       // root of the trie
+        SuffixNode *longest;    // point to the last charater except SENTINEL
 
     public:
         SuffixTrie()
@@ -80,7 +80,8 @@ class SuffixTrie
                 else 
                     pre->set_suffix_link(current->get_child(s_i));
 
-                this->longest = this->longest->get_child(s_i);
+                if (s_i != SENTINEL)
+                    this->longest = this->longest->get_child(s_i);
             }
         }
 
@@ -156,6 +157,12 @@ class SuffixTrie
 
         string longest_repeat()
         {
+            SuffixNode* tail = this->longest;
+            while (tail) {
+                if (tail->get_children().size() > 1)
+                    return tail->get_path();
+                tail = tail->get_suffix_link();
+            }
             return "";
         }
 

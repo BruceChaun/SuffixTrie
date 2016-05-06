@@ -67,6 +67,15 @@ void test_occurrence(SuffixTrie* trie, string s, string q)
     cout << q << " occurs " << trie->numberOf(q) << " time(s) in " << s << endl;
 }
 
+void test_longest_repeat(SuffixTrie* trie, string s)
+{
+    string repeat = trie->longest_repeat();
+    if (repeat == "")
+        cout << "There is no repeat substring in " << s << endl;
+    else 
+        cout << repeat << " is the longest repeat substring in " << s << endl;
+}
+
 int main(int argc, char *argv[])
 {
     string s = argv[1];
@@ -87,4 +96,5 @@ int main(int argc, char *argv[])
     test_substring(trie, s, q);
     test_suffix(trie, s, q);
     test_occurrence(trie, s, q);
+    test_longest_repeat(trie, s);
 }
