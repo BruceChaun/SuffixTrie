@@ -54,7 +54,9 @@ class SuffixNode
         // get specific child by name
         SuffixNode* get_child(string child)
         {
-            return this->children[child];
+            if (has_string(child))
+                return this->children[child];
+            return NULL;
         }
 
         // assign suffix link

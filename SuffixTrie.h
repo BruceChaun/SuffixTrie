@@ -1,9 +1,12 @@
 #include "SuffixNode.h"
+#include <queue>
 
 #ifndef SUFFIXTRIE
 #define SUFFIXTRIE
 
 using namespace std;
+
+#define SENTINEL "$"
 
 class SuffixTrie
 {
@@ -87,17 +90,68 @@ class SuffixTrie
          */
         bool has_substring(string s)
         {
-            return false;
+            SuffixNode* head = this->root;
+
+            for (int i=0; i<s.length(); i++) {
+                SuffixNode* child = head->get_child(s.substr(i, 1));
+                if (child)
+                    head = child;
+                else
+                    return false;
+            }
+
+            return true;
         }
 
         bool has_suffix(string s)
         {
+            SuffixNode* head = this->root;
+
+            for (int i=0; i<s.length(); i++) {
+                SuffixNode* child = head->get_child(s.substr(i, 1));
+                if (child)
+                    head = child;
+                else
+                    return false;
+            }
+
+            if (head->get_child(SENTINEL))
+                return true;
             return false;
         }
 
         int numberOf(string s)
         {
-            return 0;
+            SuffixNode* head = this->root;
+
+            for (int i=0; i<s.length(); i++) {
+                SuffixNode* child = head->get_child(s.substr(i, 1));
+                if (child)
+                    head = child;
+                else
+                    return 0;
+            }
+            
+            int count = 0;
+            // count number of leaves, use BFS algorithm
+            queue<SuffixNode*> q;
+            q.push(head);
+            while (!q.empty()) {
+                SuffixNode* node = q.front();
+                q.pop();
+
+                map<string, SuffixNode*> m = node->get_children();
+                if (m.size() == 0) {
+                    count ++;
+                    continue;
+                }
+
+                std::map<string, SuffixNode*>::iterator iter;
+                for (iter = m.begin(); iter != m.end(); iter++) {
+                    q.push(iter->second);
+                }
+            }
+            return count;
         }
 
         string longest_repeat()
