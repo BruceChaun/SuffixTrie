@@ -11,14 +11,12 @@ class SuffixNode
     private:
         map<string, SuffixNode*> children;
         string path;        // substring from root to current node
-        //bool visited;
         SuffixNode *suffix_link;
 
     public:
         SuffixNode(SuffixNode *n = NULL)
         {
             this->suffix_link = n;
-            //this->visited = false;
             this->path = "";
         }
 
@@ -80,16 +78,6 @@ class SuffixNode
         {
             return this->path;
         }
-
-        /*bool is_visited()
-        {
-            return this->visited;
-        }
-
-        void visit()
-        {
-            this->visited = true;
-        }*/
 };
 
 #endif
