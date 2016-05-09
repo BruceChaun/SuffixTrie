@@ -76,6 +76,12 @@ void test_longest_repeat(SuffixTrie* trie, string s)
         cout << repeat << " is the longest repeat substring in " << s << endl;
 }
 
+void test_lexico_first_suffix(SuffixTrie* trie, string s)
+{
+    string lexico_1 = trie->lexico_first_suffix();
+    cout << lexico_1 << " is the first suffix of " << s << " by alphabetical order\n";
+}
+
 int main(int argc, char *argv[])
 {
     string s = argv[1];
@@ -97,4 +103,5 @@ int main(int argc, char *argv[])
     test_suffix(trie, s, q);
     test_occurrence(trie, s, q);
     test_longest_repeat(trie, s);
+    test_lexico_first_suffix(trie, s);
 }

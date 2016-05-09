@@ -168,7 +168,30 @@ class SuffixTrie
 
         string lexico_first_suffix()
         {
-            return "";
+            SuffixNode* head = this->root;
+            string lexico_1 = "";
+
+            while (head) {
+                // only find the prefix of the first suffix
+                if (lexico_1 != "" && head->has_string(SENTINEL))
+                    break;
+
+                string min = "";
+                std::map<string, SuffixNode*>::iterator iter;
+                map<string, SuffixNode*> m = head->get_children();
+
+                for (iter = m.begin(); iter != m.end(); iter++) {
+                    string child_edge = iter->first;
+                    if (child_edge != SENTINEL && 
+                        (min == "" || child_edge.compare(min) < 0))
+                        min = child_edge;
+                }
+
+                lexico_1 += min;
+                head = head->get_child(min);
+            }
+
+            return lexico_1;
         }
 };
 
